@@ -59,7 +59,7 @@ public class Post implements Comparable<Post>{
     * Likes: numberOfLikes
     */
    public String toString(){
-    return "Title: "+title+"\nVideo: "+video+"\nNumber of likes: "+likes+"\n";
+    return "\nTitle: "+title+"\nVideo: "+video+"\nNumber of likes: "+likes;
    }
 
 }
