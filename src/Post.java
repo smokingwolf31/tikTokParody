@@ -1,5 +1,5 @@
 /**
- * @description The post object store the title of a video and the video name aolng with the number of likes the Post has.
+ * @description The post object stores the title of a video and the video name along with the number of likes the Post has.
  * @Date 12 April 2023
  * @author Nkabinde Mnqobi
  */
@@ -61,5 +61,6 @@ public class Post implements Comparable<Post>{
    public String toString(){
     return "\nTitle: "+title+"\nVideo: "+video+"\nNumber of likes: "+likes;
    }
+   
 
 }

@@ -91,7 +91,7 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
          return node.right;
    }
 
-   public boolean isTreeEmpty(){
+   public boolean isEmpty(){
       if (root==null){return true;}
       else{return false;}
    }
