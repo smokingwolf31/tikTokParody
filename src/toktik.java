@@ -104,10 +104,11 @@ public class toktik {
                 if(!accounts.isEmpty() & accName!=null & label.equals("Get Account Description")) {
                    JOptionPane.showMessageDialog(frame,"Desciption: "+accounts.find(tempAcc).data.accDescription);
                 }
-                //else if(label.equals("List All Accounts")){
-                //  JOptionPane.showMessageDialog(frame, accounts.);
+                else if(!accounts.isEmpty() & label.equals("List All Accounts")){
+                  JOptionPane.showMessageDialog(frame, accounts.inOrderTree());
+
                 
-                //}
+                }
                 else if (accName!=null & label.equals("Create An Account")) {
                     String accDescription = JOptionPane.showInputDialog(frame, "Please enter your account description:"); 
                     if(accDescription==null){
@@ -121,6 +122,7 @@ public class toktik {
                     }
                 
                 } 
+
                 else if (accName!=null & !accounts.isEmpty() & label.equals("Delete Account")) {
                      while(true){
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
@@ -133,9 +135,7 @@ public class toktik {
                      }
                 } 
                 
-                else if (label.equals("Button 3")) {
-                    // code for Button 3 goes here
-                } 
+                 
                 else if (accName!=null & !accounts.isEmpty() & label.equals("Create A Post")) {
                     String title = "";
                     String video = "";
@@ -203,7 +203,9 @@ public class toktik {
                      JOptionPane.showMessageDialog(frame, "File name must end with .txt");
                      continue;
                   }
-                  }
+                  else{break;}
+                }
+
                   try{
                      fileIn = new Scanner(new FileInputStream(fileName));  
                   }

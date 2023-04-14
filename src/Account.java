@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 /**
+ * The Account object is used to model a toktik account having an account name, account description and all the post the account
  * @date 12 April 2023
- * @description The Account object is used to model a toktik account having an account name, account description and all the post the account
  * @author Nkabinde Mnqobi
  */
 public class Account implements Comparable<Account>{

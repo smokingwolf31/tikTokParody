@@ -91,6 +91,39 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
          return node.right;
    }
 
+   public void treeOrder ()
+   {
+      treeOrder (root, 0);
+   }
+   public void treeOrder ( BinaryTreeNode<dataType> node, int level )
+   {
+      if (node != null)
+      {
+         for ( int i=0; i<level; i++ )
+            System.out.print (" ");
+         System.out.println (node.data);
+         treeOrder (node.left, level+1);
+         treeOrder (node.right, level+1);
+      }
+   }
+
+   public String inOrderTree ()
+   {
+      return inOrderTree (root, 0);
+   }
+   public String inOrderTree ( BinaryTreeNode<dataType> node, int level )
+   {  
+      String result = "";
+      if (node != null)
+      {
+         for ( int i=0; i<level; i++ )
+            result = inOrderTree (node.left, level+1) + result;
+            result = node.data.toString() + result;
+            result = inOrderTree (node.right, level+1)+ result;
+      }
+      return result;
+   }
+
    public boolean isEmpty(){
       if (root==null){return true;}
       else{return false;}

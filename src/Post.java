@@ -1,5 +1,5 @@
 /**
- * @description The post object stores the title of a video and the video name along with the number of likes the Post has.
+ * The post object stores the title of a video and the video name along with the number of likes the Post has.
  * @Date 12 April 2023
  * @author Nkabinde Mnqobi
  */
