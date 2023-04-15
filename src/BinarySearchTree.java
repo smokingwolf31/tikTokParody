@@ -101,6 +101,7 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       {
          for ( int i=0; i<level; i++ )
             System.out.print (" ");
+
          System.out.println (node.data);
          treeOrder (node.left, level+1);
          treeOrder (node.right, level+1);

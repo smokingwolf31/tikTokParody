@@ -55,7 +55,7 @@ public class Account implements Comparable<Account>{
     * @return String representation of the Account object
     */
    public String toString(){
-      return "Account name: "+accName +"\nAccount Description: "+accDescription+"\n";
+      return "Account name: "+accName.trim() +"\nAccount Description: "+accDescription+"\n\n";
    
    }
    /**

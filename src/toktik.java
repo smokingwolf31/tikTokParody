@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.OutOfMemoryError;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
@@ -21,11 +22,13 @@ public class toktik {
     private JButton createPostB;
     private JButton loadB;
     private JButton exitB;
+    private Integer numberOfAccounts;
 
     /**
      * The toktik default constructor is only used in the main class. It creates the graphical user interface.
      */
     public toktik() {
+        numberOfAccounts=0;
         accounts = new BinarySearchTree<Account>();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,7 +108,19 @@ public class toktik {
                    JOptionPane.showMessageDialog(frame,"Desciption: "+accounts.find(tempAcc).data.accDescription);
                 }
                 else if(!accounts.isEmpty() & label.equals("List All Accounts")){
-                  JOptionPane.showMessageDialog(frame, accounts.inOrderTree());
+                   
+                   if (numberOfAccounts.compareTo(10)<=0){
+                     JTextArea textArea = new JTextArea(6, 25);
+                     textArea.setText("Accounts");
+                     textArea.setEditable(false);
+                     JScrollPane scrollPanel = new JScrollPane(textArea);
+                     JOptionPane.showMessageDialog(frame, accounts.inOrderTree());
+                   
+                   }
+                   else{
+                     JOptionPane.showMessageDialog(frame, "There are too many accounts and your current operating system can not handle the memory requirements\n Please Check the Terminal for complete list of accounts");
+                     accounts.treeOrder();
+                   }
 
                 
                 }
@@ -118,6 +133,7 @@ public class toktik {
                     }
                     else{
                        accounts.insert(new Account(accName, accDescription));
+                       numberOfAccounts = numberOfAccounts+1;
                        JOptionPane.showMessageDialog(frame, "Congratulations on your new account");
                     }
                 
@@ -128,10 +144,10 @@ public class toktik {
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
                      if(decision.equals("0")){
                         accounts.delete(tempAcc);
+                        numberOfAccounts--;
                         JOptionPane.showMessageDialog(frame, "Account Deleted Successfully");
                      }
-                     else{break;}
-                     
+                     break;
                      }
                 } 
                 
@@ -184,8 +200,7 @@ public class toktik {
                      
                     }
                 } 
-                else if (label.equals("Button 5")) {
-                } 
+                
                 
                 // Loading the txt file
                 else if (label.equals("Load Text File")) {
@@ -204,7 +219,7 @@ public class toktik {
                      continue;
                   }
                   else{break;}
-                }
+                  }
 
                   try{
                      fileIn = new Scanner(new FileInputStream(fileName));  

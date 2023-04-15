@@ -21,7 +21,7 @@ CLASSES=$(CLASSES2:%.class=$(BINDIR)/%.class)
 default: $(CLASSES)
 
 run: $(CLASSES)
-	$(JAVA) -cp $(BINDIR) toktik
+	$(JAVA) -Xmx1g -cp $(BINDIR) toktik
 
 clean:
 	rm $(BINDIR)/*.class
