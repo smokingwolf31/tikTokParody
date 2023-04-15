@@ -10,6 +10,7 @@ public class Account implements Comparable<Account>{
    public String accDescription;
    public BinarySearchTree<Post> posts;
    public ArrayList<String> postTitle;
+   public Integer numberOfPosts;
    
    /**
     * Default Account constuctor
@@ -17,6 +18,7 @@ public class Account implements Comparable<Account>{
    public Account(){
       posts = new BinarySearchTree();
       postTitle = new ArrayList<>();
+      numberOfPosts = 0;
    }
    /**
     * Account constuctor used to search a AVLTree using the account name i.e AVLtree.find(new Account(String accName)) accDesciption will be null
@@ -65,6 +67,8 @@ public class Account implements Comparable<Account>{
    public void addPost(Post newPost){
       posts.insert(newPost);
       postTitle.add(newPost.title);
+      numberOfPosts++;
+
    }
    /**
     * Used to list all the post on a Account from most recent to least recent

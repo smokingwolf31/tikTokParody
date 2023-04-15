@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.OutOfMemoryError;
+import java.nio.channels.SocketChannel;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class toktik {
         listAccB = createButton("List All Accounts");
         createAccB = createButton("Create An Account");
         deleteAccB = createButton("Delete Account");
-        viewPostsB = createButton("View All Posts On An Account");
+        viewPostsB = createButton("Get Account Feed");
         createPostB = createButton("Create A Post");
         loadB = createButton("Load Text File");
         exitB = createButton("Exit");
@@ -66,7 +67,8 @@ public class toktik {
         JButton button = new JButton(label);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+               
+               //Validate Initaial User Input
                 while (true){
                    if(toktik.needAtLeastOneAcc(label) & accounts.isEmpty()){
                      JOptionPane.showMessageDialog(frame, "There are not accounts\n Be the first user by creating an account. ^_^");
@@ -103,18 +105,23 @@ public class toktik {
                    }
                    else{break;}
                 }
-            
+                
+                // Get Account Description
                 if(!accounts.isEmpty() & accName!=null & label.equals("Get Account Description")) {
                    JOptionPane.showMessageDialog(frame,"Desciption: "+accounts.find(tempAcc).data.accDescription);
                 }
+
+                // list AlL Accounts 
                 else if(!accounts.isEmpty() & label.equals("List All Accounts")){
                    
-                   if (numberOfAccounts.compareTo(10)<=0){
-                     JTextArea textArea = new JTextArea(6, 25);
+                   if (numberOfAccounts.compareTo(2)<=10){
+                     String accountsList = accounts.inOrderTree();
+                     JTextArea textArea = new JTextArea(accountsList);
                      textArea.setText("Accounts");
-                     textArea.setEditable(false);
                      JScrollPane scrollPanel = new JScrollPane(textArea);
-                     JOptionPane.showMessageDialog(frame, accounts.inOrderTree());
+                     scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                     frame.getContentPane().add(scrollPanel);
+                     JOptionPane.showMessageDialog(frame, accountsList);
                    
                    }
                    else{
@@ -124,6 +131,8 @@ public class toktik {
 
                 
                 }
+
+                //Create An Account
                 else if (accName!=null & label.equals("Create An Account")) {
                     String accDescription = JOptionPane.showInputDialog(frame, "Please enter your account description:"); 
                     if(accDescription==null){
@@ -139,6 +148,7 @@ public class toktik {
                 
                 } 
 
+                // Delete An Account
                 else if (accName!=null & !accounts.isEmpty() & label.equals("Delete Account")) {
                      while(true){
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
@@ -150,8 +160,29 @@ public class toktik {
                      break;
                      }
                 } 
+
+                // list AlL Posts
+                else if(!accounts.isEmpty() & label.equals("Get Account Feed")){
+                   
+                  if (numberOfAccounts.compareTo(2)<=10){
+                    String accountsList = accounts.inOrderTree();
+                    JTextArea textArea = new JTextArea(accountsList);
+                    textArea.setText("Accounts");
+                    JScrollPane scrollPanel = new JScrollPane(textArea);
+                    scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                    frame.getContentPane().add(scrollPanel);
+                    JOptionPane.showMessageDialog(frame, accountsList);
+                  
+                  }
+                  else{
+                    JOptionPane.showMessageDialog(frame, "There are too many accounts and your current operating system can not handle the memory requirements\n Please Check the Terminal for complete list of accounts");
+                    accounts.treeOrder();
+                  }
+
+               
+               }
                 
-                 
+                //Create A New Post
                 else if (accName!=null & !accounts.isEmpty() & label.equals("Create A Post")) {
                     String title = "";
                     String video = "";
@@ -236,7 +267,8 @@ public class toktik {
                             command = command.substring(command.indexOf(" ")+1);
                             String name = command.substring(0, command.indexOf(" "));
                             String description = command.substring(command.indexOf(" ")+1);
-                            accounts.insert(new Account(name, description));              
+                            accounts.insert(new Account(name, description));  
+                            numberOfAccounts = 1 + numberOfAccounts;            
                          }
                          else if(command.substring(0,3).equals("Add")){
                             command = command.substring(command.indexOf(" ")+1);
@@ -255,7 +287,7 @@ public class toktik {
                   }
                   
                 } 
-                 
+                // Exiting the toktik Application
                 if (label.equals("Exit")) {
                    while(true){
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
