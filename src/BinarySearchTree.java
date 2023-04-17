@@ -100,10 +100,11 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       if (node != null)
       {
          for ( int i=0; i<level; i++ )
-            System.out.print (" ");
+         System.out.print("");
          treeOrder (node.left, level+1);
          System.out.println (node.data);
          treeOrder (node.right, level+1);
+         
       }
    }
 
@@ -117,9 +118,10 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       if (node != null)
       {
          for ( int i=0; i<level; i++ )
-            result = inOrderTree (node.left, level+1) + result;
+            System.out.print("");
+            result = result + inOrderTree (node.left, level+1);
             result = node.data.toString() + result;
-            result = inOrderTree (node.right, level+1)+ result;
+            result = result + inOrderTree (node.right, level+1);
       }
       return result;
    }

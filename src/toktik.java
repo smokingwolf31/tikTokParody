@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.OutOfMemoryError;
 import java.nio.channels.SocketChannel;
 import java.io.FileInputStream;
 import java.util.Scanner;
@@ -11,42 +10,59 @@ import java.util.Scanner;
  * , users can follow one another and like each others post.
  */
 public class toktik {
+
+    
     public static BinarySearchTree<Account> accounts;
     public String accName = " ";
     public Account tempAcc;
     private JFrame frame;
-    private JButton accDescB;
-    private JButton listAccB;
-    private JButton createAccB;
-    private JButton deleteAccB;
-    private JButton viewPostsB;
-    private JButton createPostB;
-    private JButton loadB;
-    private JButton exitB;
-    private Integer numberOfAccounts;
+    private JButton accDescB,listAccB,createAccB,deleteAccB,viewPostsB,createPostB,loadB,exitB;
+    private int numberOfAccounts;
 
     /**
      * The toktik default constructor is only used in the main class. It creates the graphical user interface.
      */
     public toktik() {
+        ImageIcon toktikIcon = new ImageIcon("toktikBlue.png");
         numberOfAccounts=0;
         accounts = new BinarySearchTree<Account>();
-        frame = new JFrame();
+        frame = new JFrame("toktik");
+        frame.setIconImage(toktikIcon.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
-        frame.setLayout(new GridLayout(2, 20));
+        GridLayout layOut = new GridLayout(4, 20);
+        layOut.setHgap(6);
+        layOut.setVgap(10);
+        frame.setLayout(layOut);
         frame.setSize(700, 500);
-
+        
+        
         accDescB = createButton("Get Account Description");
+        accDescB.setIcon(new ImageIcon("//images//accDescriptionImage.png"));
+        accDescB.setBackground(Color.LIGHT_GRAY);
         listAccB = createButton("List All Accounts");
+        listAccB.setBackground(Color.LIGHT_GRAY);
+        listAccB.setIcon(new ImageIcon("images//listAccImage.png"));
         createAccB = createButton("Create An Account");
+        createAccB.setBackground(Color.LIGHT_GRAY);
+        createAccB.setIcon( new ImageIcon("images//addAccImage.png"));
         deleteAccB = createButton("Delete Account");
+        deleteAccB.setIcon(new ImageIcon("images//deleteAccImage.png"));
+        deleteAccB.setBackground(Color.LIGHT_GRAY);
         viewPostsB = createButton("Get Account Feed");
+        viewPostsB.setBackground(Color.LIGHT_GRAY);
+        viewPostsB.setIcon(new ImageIcon("images//viewPostImage.png"));
         createPostB = createButton("Create A Post");
+        createPostB.setBackground(Color.LIGHT_GRAY);
+        createPostB.setIcon(new ImageIcon("images//createPostImage.png"));
         loadB = createButton("Load Text File");
-        exitB = createButton("Exit");
-
+        loadB.setBackground(Color.LIGHT_GRAY);
+        loadB.setIcon(new ImageIcon("images//uploadFileImage.png"));
+        exitB = createButton("");
+        exitB.setIcon(new ImageIcon("images//exitImage.png"));
+        exitB.setBackground(Color.LIGHT_GRAY);
+        
         frame.add(accDescB);
         frame.add(listAccB);
         frame.add(createAccB);
@@ -59,7 +75,7 @@ public class toktik {
         frame.setVisible(true);
     }
     /**
-     * 
+     * Used to create a Jbutton and an action listener to it. Each button as specific functions depending on the lable it has and performs as intended when clicked.
      * @param label pass in the text that must be displayed on the JButton object.
      * @return JButton object that adds the ActionListener method.
      */
@@ -67,7 +83,6 @@ public class toktik {
         JButton button = new JButton(label);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               
                //Validate Initaial User Input
                 while (true){
                    if(toktik.needAtLeastOneAcc(label) & accounts.isEmpty()){
@@ -113,26 +128,23 @@ public class toktik {
 
                 // list AlL Accounts 
                 else if(!accounts.isEmpty() & label.equals("List All Accounts")){
-                   
-                   if (numberOfAccounts.compareTo(2)<=10){
-                     String accountsList = accounts.inOrderTree();
-                     JTextArea textArea = new JTextArea(accountsList);
-                     textArea.setText("Accounts");
-                     JScrollPane scrollPanel = new JScrollPane(textArea);
-                     scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                     frame.getContentPane().add(scrollPanel);
-                     JOptionPane.showMessageDialog(frame, accountsList);
+                   if (numberOfAccounts<300){
+                     JTextArea textArea = new JTextArea(accounts.inOrderTree()); 
+                     textArea.setWrapStyleWord(false);
+                     JScrollPane scrollPane = new JScrollPane(textArea);  
+                     scrollPane.setPreferredSize( new Dimension( 450, 500 ) );
+                     JOptionPane.showMessageDialog(null, scrollPane, "All toktik Accounts", JOptionPane.YES_NO_OPTION); 
                    
                    }
                    else{
-                     JOptionPane.showMessageDialog(frame, "There are too many accounts and your current operating system can not handle the memory requirements\n Please Check the Terminal for complete list of accounts");
+                     JOptionPane.showMessageDialog(frame, "There are too many accounts and your current operating system can not handle the memory requirements\n Please Check the Terminal for the complete list of accounts");
                      accounts.treeOrder();
                    }
 
                 
                 }
 
-                //Create An Account
+                // Create An Account
                 else if (accName!=null & label.equals("Create An Account")) {
                     String accDescription = JOptionPane.showInputDialog(frame, "Please enter your account description:"); 
                     if(accDescription==null){
@@ -145,41 +157,42 @@ public class toktik {
                        numberOfAccounts = numberOfAccounts+1;
                        JOptionPane.showMessageDialog(frame, "Congratulations on your new account");
                     }
-                
                 } 
 
                 // Delete An Account
-                else if (accName!=null & !accounts.isEmpty() & label.equals("Delete Account")) {
+                else if (!accounts.isEmpty() & accName!=null & label.equals("Delete Account")) {
                      while(true){
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
                      if(decision.equals("0")){
                         accounts.delete(tempAcc);
                         numberOfAccounts--;
                         JOptionPane.showMessageDialog(frame, "Account Deleted Successfully");
+                        
                      }
                      break;
                      }
                 } 
 
-                // list AlL Posts
-                else if(!accounts.isEmpty() & label.equals("Get Account Feed")){
-                   
-                  if (numberOfAccounts.compareTo(2)<=10){
-                    String accountsList = accounts.inOrderTree();
-                    JTextArea textArea = new JTextArea(accountsList);
-                    textArea.setText("Accounts");
-                    JScrollPane scrollPanel = new JScrollPane(textArea);
-                    scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                    frame.getContentPane().add(scrollPanel);
-                    JOptionPane.showMessageDialog(frame, accountsList);
+                // list All Posts
+                else if(accName!=null & !accounts.isEmpty() & label.equals("Get Account Feed")){
+                  Account accToView = accounts.find(tempAcc).data;
+                  if (accToView.posts.isEmpty()){
+                     JOptionPane.showMessageDialog(frame, "This account does not have any posts yet");
+                  }
+                  
+                  else if(accToView.numberOfPosts<300){
+                     JTextArea textArea = new JTextArea(accToView.getAllPosts()); 
+                     textArea.setWrapStyleWord(false);
+                     JScrollPane scrollPane = new JScrollPane(textArea);  
+                     scrollPane.setPreferredSize( new Dimension( 450, 500 ) );
+                     JOptionPane.showMessageDialog(null, scrollPane, "Posts By "+accToView.accName, JOptionPane.YES_NO_OPTION); 
+                                       
                   
                   }
                   else{
-                    JOptionPane.showMessageDialog(frame, "There are too many accounts and your current operating system can not handle the memory requirements\n Please Check the Terminal for complete list of accounts");
-                    accounts.treeOrder();
+                    JOptionPane.showMessageDialog(frame, "There are too many posts and your current operating system can not handle the memory requirements\n Please Check the Terminal for the complete list of posts");
+                    accToView.posts.treeOrder();
                   }
-
-               
                }
                 
                 //Create A New Post
@@ -215,20 +228,17 @@ public class toktik {
                                       continue;
                                   }
                                   if (likes.compareTo(2000)==1){
-                                     JOptionPane.showMessageDialog(frame, "Mhh north of 2000 likes, Everyone must like you😊 ");
-                                     
-                                     
+                                     JOptionPane.showMessageDialog(frame, "Mhh north of 20000 likes, Everyone must like you😊 ");
                                   }
                                   accounts.find(tempAcc).data.posts.insert(new Post(title, video, likes));
+                                  accounts.find(tempAcc).data.postTitle.add(title);
                                   JOptionPane.showMessageDialog(frame, "Post Uploaded Successfully");
+
                                   break getTitle;
                                }
                              }
-                          
                           }
                        }
-                       
-                     
                     }
                 } 
                 
@@ -268,7 +278,7 @@ public class toktik {
                             String name = command.substring(0, command.indexOf(" "));
                             String description = command.substring(command.indexOf(" ")+1);
                             accounts.insert(new Account(name, description));  
-                            numberOfAccounts = 1 + numberOfAccounts;            
+                            numberOfAccounts++;            
                          }
                          else if(command.substring(0,3).equals("Add")){
                             command = command.substring(command.indexOf(" ")+1);
@@ -279,8 +289,10 @@ public class toktik {
                             Integer likesOfVideo = Integer.parseInt(command.substring(0,command.indexOf(" ")));
                             String titleOfVideo = command.substring(command.indexOf(" ")+1);
                             Post newPostToAdd = new Post(titleOfVideo, videoToAdd , likesOfVideo);
-                            accounts.find(new Account(accName)).data.posts.insert(newPostToAdd);
-                            accounts.find(new Account(accName)).data.postTitle.add(newPostToAdd.title);
+                            Account accToPostOn = accounts.find(new Account(accName)).data;
+                            accToPostOn.posts.insert(newPostToAdd);
+                            accToPostOn.postTitle.add(newPostToAdd.title);
+                            accToPostOn.numberOfPosts++;
                            }
                         }
                   JOptionPane.showMessageDialog(frame, "All account creation and or uploads succesuful");
@@ -288,7 +300,7 @@ public class toktik {
                   
                 } 
                 // Exiting the toktik Application
-                if (label.equals("Exit")) {
+                if (label.equals("")) {
                    while(true){
                      String decision = JOptionPane.showConfirmDialog(frame,"Are you sure?")+"";
                      if(decision.equals("0")){
@@ -333,14 +345,14 @@ public class toktik {
     }
     
     public static boolean needAtLeastOneAcc(String label){
-      String[] labels = new String[] {"Get Account Description","List All Accounts","Delete Account", "Create A Post"};
+      String[] labels = new String[] {"Get Account Description","List All Accounts","Delete Account", "Create A Post","Get Account Feed"};
       for(String index: labels){
          if(index.equals(label)){return true;}
       }
       return false;
    }
    public static boolean needsAccName(String label){
-      String[] labels = new String[] {"Create An Account","Get Account Description", "Delete Account", "Create A Post"};
+      String[] labels = new String[] {"Create An Account","Get Account Description", "Delete Account", "Create A Post", "Get Account Feed"};
       for(String index: labels){
          if(index.equals(label)){return true;}
       }
