@@ -1,9 +1,14 @@
-// Hussein's Binary Search Tree
-// 27 March 2017
-// Hussein Suleman
-
+/**
+ * Hussein's Binary Search Tree
+ * 27 March 2017
+ * @author Suleman
+ */
 public class BinarySearchTree<dataType extends Comparable<? super dataType>> extends BinaryTree<dataType>
-{
+{  
+   /**
+    * insert a dataTyepe into tree
+    * @param d pass in the data type to insert
+    */
    public void insert ( dataType d )
    {
       if (root == null)
@@ -11,6 +16,11 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       else
          insert (d, root);
    }
+   /**
+    * Helping method for the insert method with one param
+    * @param d insert a dataTyepe into tree
+    * @param node node to start inserting at
+    */
    public void insert ( dataType d, BinaryTreeNode<dataType> node )
    {
       if (d.compareTo (node.data) <= 0)
@@ -29,6 +39,11 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       }
    }
    
+   /**
+    * Used to find a specific data type in the tree
+    * @param d pass in the data type you need to find
+    * @return the BTNode where the datatye is and null if it s not in the tree
+    */
    public BinaryTreeNode<dataType> find ( dataType d )
    {
       if (root == null)
@@ -36,6 +51,12 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       else
          return find (d, root);
    }
+   /**
+    * Helping method for the find method with one param
+    * @param d pass in the datatype you which to find
+    * @param node pass in the BTNode you which to start searching at
+    * @return the BTNode where the datatype is and null if it s not in the tree
+    */
    public BinaryTreeNode<dataType> find ( dataType d, BinaryTreeNode<dataType> node )
    {
       if (d.compareTo (node.data) == 0) 
@@ -46,10 +67,20 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
          return (node.right == null) ? null : find (d, node.right);
    }
    
+   /**
+    * Used to remove a dataTye from the tree
+    * @param d pass in the datatype to remove
+    */
    public void delete ( dataType d )
    {
       root = delete (d, root);
    }   
+   /**
+    * Helping method for the delete method with one param
+    * @param d pass in the data type to delete 
+    * @param node pass in the BT node to start searching at
+    * @return the BTNode where the datatype is and null if it s not in the tree
+    */
    public BinaryTreeNode<dataType> delete ( dataType d, BinaryTreeNode<dataType> node )
    {
       if (node == null) return null;
@@ -69,7 +100,11 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
             node = node.right;
       return node;
    }
-   
+   /**
+    * Used to find the mininmum data type in the tree
+    * @param node pass in the node to start searching at
+    * @return the BTNode where the datatype is and null if it s not in the tree
+    */
    public BinaryTreeNode<dataType> findMin ( BinaryTreeNode<dataType> node )
    {
       if (node != null)
@@ -77,7 +112,11 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
             node = node.left;
       return node;
    }
-
+   /**
+    * Used to remove the minimun data type in the tree
+    * @param node pass in the node to start searching at
+    * @return he BTNode where the datatype is and null if it s not in the tree
+    */
    public BinaryTreeNode<dataType> removeMin ( BinaryTreeNode<dataType> node )
    {
       if (node == null)
@@ -90,11 +129,18 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       else
          return node.right;
    }
-
+   /**
+    * print out the data types in the tree 
+    */
    public void treeOrder ()
    {
       treeOrder (root, 0);
    }
+   /**
+    * Helping method for the treeOrder method with one param
+    * @param node pass in the node to start searching at
+    * @param level pass in the level to seach at
+    */
    public void treeOrder ( BinaryTreeNode<dataType> node, int level )
    {
       if (node != null)
@@ -107,11 +153,20 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
          
       }
    }
-
+   /**
+    * Used to get all the data types in the BStree
+    * @return the string respesantation of all the data types in the tree
+    */
    public String inOrderTree ()
    {
       return inOrderTree (root, 0);
    }
+   /**
+    * Used to remove the minimun data type in the tree
+    * @param node pass in the node to start searching at
+    * @param level pass in the level the node is at
+    * @return he BTNode where the datatype is and null if it s not in the tree
+    */
    public String inOrderTree ( BinaryTreeNode<dataType> node, int level )
    {  
       String result = "";
@@ -125,7 +180,10 @@ public class BinarySearchTree<dataType extends Comparable<? super dataType>> ext
       }
       return result;
    }
-
+   /**
+    * Used to determine if the tree is empty or not
+    * @return booloean value true if the tree is empty and false if it.
+    */
    public boolean isEmpty(){
       if (root==null){return true;}
       else{return false;}

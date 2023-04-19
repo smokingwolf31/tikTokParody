@@ -11,7 +11,9 @@ BINDIR=bin
 $(BINDIR)/%.class: $(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES2=BinaryTreeNode.class BTQueueNode.class BTQueue.class BinaryTree.class BinarySearchTree.class Post.class Account.class toktik.class
+CLASSES2=BinaryTreeNode.class BTQueueNode.class\
+	BTQueue.class BinaryTree.class BinarySearchTree.class\
+	Post.class Account.class toktik.class
          
 
 CLASSES=$(CLASSES2:%.class=$(BINDIR)/%.class)
@@ -23,9 +25,7 @@ run: $(CLASSES)
 	$(JAVA) -Xmx1g -cp $(BINDIR) toktik
 
 docs:
-	javadoc -d doc/ src/Post.java
-	javadoc -d doc/ src/Account.java
-	javadoc -d doc/ src/toktik.java
+	javadoc -d doc/ src/*.java
 
 clean:
 	rm $(BINDIR)/*.class

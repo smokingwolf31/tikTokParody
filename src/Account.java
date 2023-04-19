@@ -7,17 +7,15 @@ import java.util.ArrayList;
  */
 public class Account implements Comparable<Account>{
    /**Account name or the user name of the account.The account name is just one name*/
-   public String accName;
+   private String accName;
    /**This is the account description or the bio.*/
-   public String accDescription;
+   private String accDescription;
    /**This is a data stucture(BST) used to store Post objects. The posts variable is used to reference the data stucture*/
-   public BinarySearchTree<Post> posts;
+   private BinarySearchTree<Post> posts;
    /**This variable stores the posts titles of the videos ass they are added. Its used to help keep track of which posts are the most recent*/
-   public ArrayList<String> postTitle;
+   private ArrayList<String> postTitle;
    /**The number of post are incrimented depending on wheather the post are created or deleted. It is used to rougly calculate the amount of memoery required to display all posts*/
    public int numberOfPosts;
-   /**The followers variable stores the accont names of the people this account is followed by. */
-   public BinarySearchTree<Account> followers;
    
    /**
     * Default Account constuctor
@@ -25,7 +23,6 @@ public class Account implements Comparable<Account>{
    public Account(){
       posts = new BinarySearchTree();
       postTitle = new ArrayList<>();
-      followers = new BinarySearchTree<>();
    }
    /**
     * Account constuctor used to search a AVLTree using the account name i.e AVLtree.find(new Account(String accName)) accDesciption will be null.
@@ -50,7 +47,29 @@ public class Account implements Comparable<Account>{
       numberOfPosts = 0;
       
    }
+   /**
+    * Used to get the account name linked to the account object
+    * @return account name as a String
+    */
+   public String getAccName(){return accName;}
    
+   /**
+    * Used to get the account description linked to the account object
+    * @return account description as a String
+    */
+   public String getAccDescription(){return accDescription;}
+   
+   /**
+    * Used to get all the posts made by the account.
+    * @return a BTSearchTree for all the posts.
+    */
+   public BinarySearchTree<Post> getPosts(){return posts;}
+
+   /**
+    * Used to get all the posts titles of all the videos.
+    * @return ArrayList with string objects contaning all the post titles
+    */
+   public ArrayList<String> getPostTitle(){return postTitle;}
    /**
     * Used to compare two Account object using the accName relative to the alphabet
     * @param other pass in the other Account object to compare
@@ -74,16 +93,17 @@ public class Account implements Comparable<Account>{
     */
    public void addPost(Post newPost){
       posts.insert(newPost);
-      postTitle.add(newPost.title);
+      postTitle.add(newPost.getTitle());
       numberOfPosts++;
    }
    
    /**
-   * can be used to increase the number of followers an specific account has.this followers the account passed in
-   * @param accountToFollow in the Account object you want to follow.
+   *This method is used to delete a post on an account.
+   *@param postToDelete pass in the post you want to delete
    */
-   public void followAcc(Account accountToFollow){
-      accountToFollow.followers.insert(this);
+   public void deletePost(Post postToDelete){
+      this.posts.delete(postToDelete);
+      this.postTitle.remove(postToDelete.getTitle());
    }
    
    /**

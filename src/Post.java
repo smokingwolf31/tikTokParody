@@ -5,9 +5,9 @@
  */
 
 public class Post implements Comparable<Post>{
-   public String title;
-   public String video;
-   public Integer likes;
+   private String title;
+   private String video;
+   private Integer likes;
    
 
    /**
@@ -34,6 +34,11 @@ public class Post implements Comparable<Post>{
       this.likes = likes;
    
    }
+   /**
+    * Used to get the title of a specific post
+    * @return returns the String which is the title of the post.
+    */
+   public String getTitle(){return title;}
 
    /**
     * When called on a Post object it adds one like to the post
