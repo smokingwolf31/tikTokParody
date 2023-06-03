@@ -17,7 +17,7 @@ public class toktik {
     String accName = " ";
     Account tempAcc;
     private JFrame frame;
-    private JButton accDescB,listAccB,createAccB,deleteAccB,viewPostsB,createPostB,likePostB,deletePostB,loadB,exitB;
+    private JButton accDescB,listAccB,createAccB,deleteAccB,viewPostsB,playVideoB,createPostB,likePostB,deletePostB,loadB,exitB,;
     private int numberOfAccounts;
 
     /**
@@ -57,6 +57,9 @@ public class toktik {
         viewPostsB.setIcon(new ImageIcon("src//images//viewPostImage.png"));
         createPostB = createButton("Create A Post");
         createPostB.setBackground(Color.LIGHT_GRAY);
+        playVideoB = createButton("Play Video");
+        playVideoB.setIcon(new ImageIcon("src//images//accDescriptionImage.png"));
+        playVideoB.setBackground(Color.LIGHT_GRAY);
         createPostB.setIcon(new ImageIcon("src//images//createPostImage.png"));
         likePostB = createButton("Like A Post");
         likePostB.setIcon(new ImageIcon("src//images//likePostImage.png"));
@@ -76,6 +79,7 @@ public class toktik {
         frame.add(createAccB);
         frame.add(deleteAccB);
         frame.add(viewPostsB);
+        frame.add(playVideoB);
         frame.add(createPostB);
         frame.add(likePostB);
         frame.add(deletePostB);
@@ -254,8 +258,8 @@ public class toktik {
                     }
                 } 
                 
-                //Delete A post Or Like A Post
-                else if(accName!=null & !accounts.isEmpty() & (label.equals("Delete A Post") | label.equals("Like A Post"))){
+                //Delete A post Or Like A Post or Play A video
+                else if(accName!=null & !accounts.isEmpty() & (label.equals("Play Video") |label.equals("Delete A Post") | label.equals("Like A Post"))){
                   while(true){
                      Account accToManage = accounts.find(tempAcc).data;
                      if(accToManage.getPosts().isEmpty()){
@@ -281,6 +285,9 @@ public class toktik {
                         accToManage.deletePost(new Post(videoTitle));
                         JOptionPane.showMessageDialog(frame, "Post Deleted.. We wont tell anyone if you dont");
                         break;
+                     }
+                     else if(label.equals("Play Video")){
+                        // need to use fx scene builder    
                      }
                   } 
                   
@@ -395,7 +402,7 @@ public class toktik {
      * @return returns true if the button needs at least one account already created else it returns false.
      */
     public static boolean needAtLeastOneAcc(String label){
-      String[] labels = new String[] {"Get Account Description","List All Accounts","Delete Account", "Create A Post","Get Account Feed","Delete A Post","Like A Post"};
+      String[] labels = new String[] {"Get Account Description","List All Accounts","Delete Account", "Create A Post","Get Account Feed", "Play Video","Delete A Post","Like A Post"};
       for(String index: labels){
          if(index.equals(label)){return true;}
       }
@@ -408,7 +415,7 @@ public class toktik {
     * @return boolean value , true if the button needs an account name and false if it does not
     */
    public static boolean needsAccName(String label){
-      String[] labels = new String[] {"Create An Account","Get Account Description", "Delete Account", "Create A Post", "Get Account Feed","Delete A Post","Like A Post"};
+      String[] labels = new String[] {"Create An Account","Get Account Description", "Delete Account", "Create A Post", "Get Account Feed", "Play Video","Delete A Post","Like A Post"};
       for(String index: labels){
          if(index.equals(label)){return true;}
       }
